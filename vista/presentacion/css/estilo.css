@@ -1,0 +1,165 @@
+*{
+    font-family: cursive;
+}
+
+*{
+  padding: 0;
+  margin: 0;
+}
+
+#imgperfil {
+  width: 150px;
+  height: 150px;
+}
+
+#seccionop {
+  background: #F1F3F3;
+  border-top: 10px double;
+  border-bottom: 10px double;
+  border-color: #b43432;
+  border-radius: 15px 15px 15px 15px;
+  display: block;
+  margin: 5% 35% 5% 35%; 
+}
+
+.color_1{
+  height: 100%;
+  width: 100%;
+}
+
+.color_2{
+  background: #fff;
+  height: 50%;
+  width: 100%
+}
+
+nav{
+	list-style-type: none;
+}
+
+.letra-titulo{
+	font-family: 'Oswald', sans-serif;
+	font-size: 2em;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #ffffff;
+  list-style-type: none;
+  text-decoration: none;
+}
+
+.imagen-principal{
+	align-items: center;
+	width: 30%;
+	height: 20%;
+	display:block;
+	margin:auto;
+	margin-top: 2em;
+  margin-bottom: 2em; 
+}
+
+.imagen-carousel {
+	height:100%; 
+	width:100%;
+}
+
+#tit {
+  margin-top: 1em;
+  text-align: center;
+}
+
+#seccion {
+  background: #F1F3F3;
+  border-top: 10px double;
+  border-bottom: 10px double;
+  border-color: #b43432;
+  border-radius: 15px 15px 15px 15px;
+  display: block;
+  margin: 10% 15% 5% 15%;
+}
+
+p{
+  text-align: center;
+  margin: 1em;
+}
+
+#imgpd {
+  margin-left: 6em;
+  width: 25%
+}
+
+#fpd {
+  margin-right: 12em;
+}
+
+#navpd {
+  padding: 1em;
+}
+
+#tpd {
+  margin: auto;
+  margin-top: 4em;
+  color: #A0A5A5;
+}
+
+#tdpd {
+  color: black;
+  text-align: center;
+}
+
+#hh {
+  width: 100%;
+  background-color: white;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.navegacion{
+  padding: -10px;
+}
+
+header .izq{
+  width: 33%;
+  padding: 2%;
+}
+
+header .centro{
+  margin-top: 2%;
+  width: 33%;
+}
+
+header .der{
+  padding: 2%;
+  width: 33%;
+}
+
+#iconocabecera {
+  width: 40%;
+  margin: auto;
+  display: block;
+  padding-top: 10px;
+}
+
+footer {
+  text-align: right;
+  padding-right: 2em;
+  padding-top: 2em;
+}
