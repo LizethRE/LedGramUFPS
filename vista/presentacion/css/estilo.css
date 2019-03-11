@@ -163,3 +163,11 @@ footer {
   padding-right: 2em;
   padding-top: 2em;
 }
+
+.imagen-principal{
+  align-items: center;
+  width: 30%;
+  height: 20%;
+  display:block;
+  margin:auto;
+}
