@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,20 +35,12 @@
 	</header>
 
 	<div class="container">
-		<div class="row">
-			<div class="col-md-8">
-				
-			</div>
-
-			<div class="col-md-4">
-				<label for="boton-archivo">
-					<img class="rounded-circle" id="imgperfil" src="https://scontent.fbog4-1.fna.fbcdn.net/v/t1.0-9/49293650_10215782616550174_899128833364459520_n.jpg?_nc_cat=110&_nc_ht=scontent.fbog4-1.fna&oh=9dd84ecf1cc3723b5ca9afc1bb85a9bb&oe=5D0E3E7E">
-				</label>
-
-				<input id="boton-archivo" type="file" style="display: none;">
-			</div>
 			
-		</div>
+		<label for="boton-archivo">
+			<img class="rounded-circle" id="imgperfil" src="vista/presentacion/images/perfil.jpg">
+		</label>
+
+			<input id="boton-archivo" type="file" style="display: none;">
 
 	</div>
 

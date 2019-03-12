@@ -7,7 +7,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<link rel="stylesheet" type="text/css" href="vista/presentacion/css/style.css">
-	<link rel="icon" type="image/png" href="vista/presentacion/images/icono.ico" />
 
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -15,11 +14,8 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-	<meta name="google-signin-scope" content="https://www.googleapis.com/auth/userinfo.profile">
-    <meta name="google-signin-client_id" content="563327878473-jackv8rsbq5pqlm1p3b9q25hq9q1p1sa.apps.googleusercontent.com">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 </head>
 <body>
 	<br>
@@ -28,51 +24,48 @@
 			<div>
 				<img src="vista/presentacion/images/ledgram.png" id="iconocabecera">
 				<p>Ingresa para ver fotos y vídeos de tus amigos de la UFPS.</p>
-				
-			</div>
-			<div >
-				<div class="g-signin2 boton-login center" data-onsuccess="onSignIn" data-theme="dark" align="center" style="margin-bottom: 0.5em"></div>
-			    <script>
-				    function onSignIn(googleUser) {
-				        // Useful data for your client-side scripts:
-				        var profile = googleUser.getBasicProfile();
-				        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-				        console.log('Full Name: ' + profile.getName());
-				        console.log('Given Name: ' + profile.getGivenName());
-				        console.log('Family Name: ' + profile.getFamilyName());
-				        console.log("Image URL: " + profile.getImageUrl());
-				        console.log("Email: " + profile.getEmail());
-				        // The ID token you need to pass to your backend:
-				        var id_token = googleUser.getAuthResponse().id_token;
-				        console.log("ID Token: " + id_token);
-				        header('Location: vista/inicio.php');
-				      }
-			    </script>				   
+				<br>
+				<div>
+					<button style="color: white; width: 80%;" id="btn-Google" class="btn btn-danger btn-md "><i class="fab fa-google" style="margin-right: 5%;"></i>Google</button>
+				</div>
+				<br>
 			</div>
 		</section>
 		<p>Al ingresar, aceptas nuestras Condiciones, la <a href="vista/modulos/politicadatos.html">Política de datos.</a></p>
-  		<!-- Content here -->
+		<!-- Content here -->
 	</div>
 
 	<footer>
-	<a href="https://ww2.ufps.edu.co/"><img class="imagen-principal " src=vista/presentacion/images/logoufps.png></a>
-	© 2019 LedGram
+		<a href="https://ww2.ufps.edu.co/"><img class="imagen-principal " src=vista/presentacion/images/logoufps.png></a>
+		© 2019 LedGram
 	</footer>
 </body>
 
 <script type="text/javascript">
 	var index = 0;
+
 	var listaimg = ["vista/presentacion/images/apps_co.jpg", "vista/presentacion/images/apps.jpg", "vista/presentacion/images/fondoescritorio.jpg", "vista/presentacion/images/fondopantalla.png"];
 
 	$(function() {
+
 		setInterval(changeImage, 2000);
+
 	});
+
 	function changeImage() {
+
+
 		$('body').css("background-image", 'url(' + listaimg[index] + ')');
+
 		index++;
+
 		if(index == 4)
 			index = 0;
+
+
 	}
 </script>
-<script src="https://apis.google.com/js/api.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/5.8.6/firebase.js"></script>
+<script type="text/javascript" src="vista/presentacion/js/app.js"></script>
 </html>
