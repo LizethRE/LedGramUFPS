@@ -1,0 +1,25 @@
+body{
+    overflow-x:hidden;
+}
+
+#formRegistrar input:valid,#formIngresar input:valid,#formActualizar input:valid,#formCambiarContrasenia input:valid,#formCrearProducto input:valid{
+    border-bottom: 2px green solid;
+    transition: 1s;
+}
+
+#formRegistrar input:invalid,#formIngresar input:invalid,#formActualizar input:invalid,#formCambiarContrasenia input:invalid,#formCrearProducto input:invalid{
+    border-bottom: 2px red solid;
+    transition: 1s;
+}
+
+#imagen,#imagenProducto{
+    display: none;
+}
+
+.fotoPerfilCliente:hover{
+    cursor: pointer;
+}
+
+#menuhombres li:hover,#menumujeres li:hover{
+    cursor: pointer;
+}

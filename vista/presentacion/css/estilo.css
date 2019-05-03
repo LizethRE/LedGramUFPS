@@ -1,5 +1,90 @@
-*{
-    font-family: cursive;
+/*body{
+    content: "";
+    background-image: url("../images/apps_co.jpg");
+    background-size: cover;
+    background-position: center;
+    position: center;
+    background-repeat: no-repeat;
+}*/
+
+body{
+    padding: 0;
+    margin: 0;
+}
+
+.cargar{
+    animation: slide 2s;
+}
+
+.carrusel{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 100vh;
+    animation: slide 30s infinite;
+    margin-top: -5%;
+}
+
+.lista {
+  display: flex;
+  text-align: right;
+}
+
+.lista li{
+  float: right;
+  flex: 1;
+}
+
+
+.carrusel:before {
+  content: "";
+  background-color: #fafafa;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  opacity: 0.5;
+}
+
+.container {
+  position: relative;
+  top: 20%;
+}
+
+#seccionop {
+  background: #F1F3F3;
+  border-top: 10px double;
+  border-bottom: 10px double;
+  border-color: #b43432;
+  border-radius: 15px 15px 15px 15px;
+  display: block;
+  margin: 6% 35% 5% 35%; 
+}
+
+p{
+  text-align: center;
+  margin: 1em;
+}
+
+#iconocabecera {
+  width: 40%;
+  margin: auto;
+  display: block;
+  padding-top: 10px;
+}
+
+footer {
+  text-align: right;
+  padding-right: 2em;
+  padding-top: 2em;
+  position: relative;
+  bottom: -20%;
+}
+
+.imagen-principal{
+  align-items: right;
+  width: 5%;
+  padding-right: 1em;
 }
 
 *{
@@ -10,16 +95,6 @@
 #imgperfil {
   width: 150px;
   height: 150px;
-}
-
-#seccionop {
-  background: #F1F3F3;
-  border-top: 10px double;
-  border-bottom: 10px double;
-  border-color: #b43432;
-  border-radius: 15px 15px 15px 15px;
-  display: block;
-  margin: 5% 35% 5% 35%; 
 }
 
 .color_1{
@@ -67,15 +142,7 @@ li a:hover {
   text-decoration: none;
 }
 
-.imagen-principal{
-	align-items: center;
-	width: 30%;
-	height: 20%;
-	display:block;
-	margin:auto;
-	margin-top: 2em;
-  margin-bottom: 2em; 
-}
+
 
 .imagen-carousel {
 	height:100%; 
@@ -102,9 +169,10 @@ p{
   margin: 1em;
 }
 
-#imgpd {
-  margin-left: 6em;
-  width: 25%
+#logop {
+  display: block;
+  margin: auto;
+  width: 30%;
 }
 
 #fpd {
@@ -126,10 +194,23 @@ p{
   text-align: center;
 }
 
-#hh {
+.cambioPass{
+	color: #525f7f;
+	border: none;
+	padding-left: 0px;
+    padding-right: 0px;
+}
+
+.cont{
+	padding-left: 0px;
+    padding-right: 0px;
+}
+
+header{
   width: 100%;
-  background-color: white;
-  border-bottom: 1px solid #e5e5e5;
+  background-color: white; 
+  border-radius: 20px 20px 20px 20px;
+  padding: 15px;
 }
 
 .navegacion{
@@ -143,12 +224,13 @@ header .izq{
 
 header .centro{
   margin-top: 2%;
-  width: 33%;
+  width: 25%;
 }
 
 header .der{
   padding: 2%;
   width: 33%;
+  float: right;
 }
 
 #iconocabecera {
@@ -162,4 +244,67 @@ footer {
   text-align: right;
   padding-right: 2em;
   padding-top: 2em;
+}
+
+@keyframes slide{
+    0%{
+            background-image: url("../images/ufps.jpg");
+    }
+    20%{
+            background-image: url("../images/ufps.jpg");
+    }
+    20.01%{
+            background-image: url("../images/studen.jpg");
+    }
+    30%{
+            background-image: url("../images/studen.jpg");
+    }
+    30.01%{
+            background-image: url("../images/studens.jpg");
+    }
+    40%{
+            background-image: url("../images/studens.jpg");
+    }
+    40.01%{
+            background-image: url("../images/ufps.jpg");
+    }
+    60%{
+            background-image: url("../images/ufps.jpg");
+    }
+    60.01%{
+            background-image: url("../images/studen.jpg");
+    }
+    80%{
+            background-image: url("../images/studen.jpg");
+    }
+    80.01%{
+            background-image: url("../images/studens.jpg");
+    }
+    100%{
+            background-image: url("../images/studens.jpg");
+    }
+}
+
+@media (max-width: 800px) {
+    #seccionop{
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    #logop{
+      width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    #seccionop{
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    #logop{
+      width: 30%;
+    }
 }
