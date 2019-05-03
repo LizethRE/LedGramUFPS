@@ -50,7 +50,7 @@ $user = unserialize($_SESSION["Usuario"]);
                </div>
                <div class="col-lg-6">
                <input type="hidden" id="textoamistad" name="textoamistadinicio">
-               <button class="btn bg-white ml-4" data-id="megusta" id="btnMegusta"><i class="far fa-heart"></i></button>
+               <button class="btn bg-white ml-4" data-id="megusta" id="btnMegusta"><i class="far fa-kiss-wink-heart" id="icoMegusta"></i></button>
                </div> 
             </div>
             </div>

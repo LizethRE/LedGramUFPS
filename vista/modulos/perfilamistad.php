@@ -109,7 +109,7 @@ if (strcmp($user->getId(), $id) === 0) {
                </div>
                <div class="col-lg-6">
                <input type="hidden" id="textoamistad" name="textoamistad">
-                <button class="btn bg-white ml-4" data-id="" id="megusta"><i class="fas fa-heart"></i></button>
+                <button class="btn bg-white ml-4" data-id="" id="megusta"><i class="far fa-kiss-wink-heart" id="icoMegusta"></i></button>
                </div> 
             </div>
             </div>

@@ -208,10 +208,9 @@ class UsuarioDAO{
         try
         {
             $conexion = Conexion::crearConexion();
-            //$consulta = $conexion->prepare('INSERT INTO reacion (idUsuario,idPublicacion) SELECT usuario.id, publicacion.id FROM usuario, publicacion WHERE usuario.id = 2 AND publicacion.foto = "vista/presentacion/assets/publicaciones/eb944ce6a4a86cee1464c5837edf52f7bb5e966f.jpg";');
             $consulta = $conexion->prepare("INSERT INTO reacion (idUsuario,idPublicacion) SELECT usuario.id, publicacion.id FROM usuario, publicacion WHERE usuario.id = ? AND publicacion.foto = ?;");
             $consulta->bindParam(1,$idUsuario,PDO::PARAM_INT);
-            $consulta->bindParam(2,$idPublicacion,PDO::PARAM_INT);
+            $consulta->bindParam(2,$idPublicacion,PDO::PARAM_STR);
             $exito = $consulta->execute();
         }catch(Exception $exc)
         {
@@ -225,9 +224,9 @@ class UsuarioDAO{
         try
         {
             $conexion = Conexion::crearConexion();
-            $consulta = $conexion->prepare("DELETE FROM reacion WHERE idUsuario = ? AND idPublicacion = ?;");
+            $consulta = $conexion->prepare("DELETE FROM reacion WHERE reacion.idUsuario = ? AND reacion.idPublicacion = (SELECT publicacion.id FROM publicacion WHERE publicacion.foto = ?;");
             $consulta->bindParam(1,$idUsuario,PDO::PARAM_INT);
-            $consulta->bindParam(2,$idPublicacion,PDO::PARAM_INT);
+            $consulta->bindParam(2,$idPublicacion,PDO::PARAM_STR);
             $exito = $consulta->execute();
         }catch(Exception $exc)
         {
@@ -242,8 +241,8 @@ class UsuarioDAO{
             $consulta = $conexion->prepare("SELECT publicacion.foto FROM publicacion INNER JOIN reacion ON reacion.idPublicacion = publicacion.id WHERE reacion.idUsuario = ?;");
             $consulta->bindParam(1,$id,PDO::PARAM_INT);
             $consulta->execute();
-            $seguidos = $consulta->fetchAll(PDO::FETCH_ASSOC);
-            echo json_encode($seguidos);
+            $reaciones = $consulta->fetchAll(PDO::FETCH_ASSOC);
+            echo json_encode($reaciones);
         }catch(Exception $exc){
             throw new Exception("Ocurrio un error" . $exc->getTraceAsString());
         }

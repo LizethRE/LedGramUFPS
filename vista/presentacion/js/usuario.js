@@ -12,7 +12,6 @@ $(document).ready(function () {
     $(usuariosSeguidoresAmistad());
     $(mostrarPublicacionesInicio());
     $(mostrarSugerencias());
-    //$(obtenerReacion());
 
     $("#formActualizar").validate({
 
@@ -249,6 +248,7 @@ $(document).ready(function () {
         document.getElementById("descamistad").innerHTML = desa;
         $("#fotopublicacionamistad").attr("src", fotoa);
         $("#textoamistad").val(publicaciona);
+        $(obtenerReacion2());
     });
 
     $("#btnSeguir").click(function () {
@@ -364,6 +364,41 @@ $(document).ready(function () {
             success: function (respuesta) {
                 var cantidad = respuesta.length;
                 document.getElementById("seguidores").innerHTML = cantidad;
+            }
+        });
+    }
+    
+    function obtenerReacion2() {
+    	var idPublicacion = document.getElementById("fotopublicacionamistad").getAttribute('src');
+        $.ajax({
+            url: 'vista/modulos/Ajax.php?obtenerReacion=true',
+            dataType: 'json',
+            success: function (respuesta) {
+                for (var i = 0; i < respuesta.length; i++) {
+                	var elem = document.getElementById("icoMegusta");
+                    if (respuesta[i].foto == idPublicacion) {
+                    	console.log("Entro al IF");
+                        $("#btnMegusta").attr("data-id", "nomegusta");
+                        elem.classList.remove("far");
+                        elem.classList.remove("fa-kiss-wink-heart");
+                        elem.classList.add("fas");
+                        elem.classList.add("fa-heart-broken"); 
+                        
+                        break;
+                    } else {
+                    	console.log("Entro al Else");
+                        $("#btnMegusta").attr("data-id", "megusta");
+                        elem.classList.remove("fas");
+                        elem.classList.remove("fa-heart-broken");
+                        elem.classList.add("far");
+                        elem.classList.add("fa-kiss-wink-heart");
+                    };
+                }
+            },
+            error: function (jqXHR, estado, error) {
+                console.log(estado);
+                console.log(error);
+                console.log(jqXHR);
             }
         });
     }
@@ -522,6 +557,7 @@ $(document).ready(function () {
         $("#mostrarFotoModalInicio").attr("src", fotou);
         $("#fotopublicacioninicio").attr("src", fotoi);
         $("#textoamistadinicio").val(publicacioni);
+        $(obtenerReacion());
     });
 
     function mostrarSugerencias(){
@@ -589,7 +625,6 @@ $(document).ready(function () {
         });
     });   
     
-    /*
     function obtenerReacion() {
     	var idPublicacion = document.getElementById("fotopublicacioninicio").getAttribute('src');
         $.ajax({
@@ -597,17 +632,23 @@ $(document).ready(function () {
             dataType: 'json',
             success: function (respuesta) {
                 for (var i = 0; i < respuesta.length; i++) {
-                	var elem = document.getElementById("btnMegusta");
+                	var elem = document.getElementById("icoMegusta");
                     if (respuesta[i].foto == idPublicacion) {
+                    	console.log("Entro al IF");
                         $("#btnMegusta").attr("data-id", "nomegusta");
-                        elem.classList.remove("far fa-heart");
-                        elem.classList.add("fas fa-heart"); 
+                        elem.classList.remove("far");
+                        elem.classList.remove("fa-kiss-wink-heart");
+                        elem.classList.add("fas");
+                        elem.classList.add("fa-heart-broken"); 
                         
                         break;
                     } else {
+                    	console.log("Entro al Else");
                         $("#btnMegusta").attr("data-id", "megusta");
-                        elem.classList.remove("fas fa-heart");
-                        elem.classList.add("far fa-heart");
+                        elem.classList.remove("fas");
+                        elem.classList.remove("fa-heart-broken");
+                        elem.classList.add("far");
+                        elem.classList.add("fa-kiss-wink-heart");
                     };
                 }
             },
@@ -618,5 +659,4 @@ $(document).ready(function () {
             }
         });
     }
-    */
 });
