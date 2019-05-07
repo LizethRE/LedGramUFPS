@@ -178,8 +178,7 @@ class UsuarioDAO{
     function mostrarPublicacionesInicio($id){
         try{
             $conexion = Conexion::crearConexion();
-            $consulta = $conexion->prepare("SELECT publicacion.id AS idpublicacion,publicacion.foto AS fotoPublicacion,publicacion.descripcion,publicacion.fechacreacion,usuario.foto AS fotousuario,usuario.nombre AS nombre, usuario.usuario, usuario.id as idusuario FROM publicacion INNER JOIN usuario ON publicacion.usuario = usuario.id WHERE publicacion.usuario IN (SELECT usuario.id FROM usuario INNER JOIN amistad ON amistad.idSeguido = usuario.id WHERE amistad.idSeguidor = ?) AND publicacion.fechacreacion >= (SELECT date_sub(CURDATE(), INTERVAL 1 DAY));
-            ");
+            $consulta = $conexion->prepare("SELECT publicacion.id AS idpublicacion,publicacion.foto AS fotoPublicacion,publicacion.descripcion,publicacion.fechacreacion,usuario.foto AS fotousuario,usuario.nombre AS nombre, usuario.usuario, usuario.id as idusuario FROM publicacion INNER JOIN usuario ON publicacion.usuario = usuario.id WHERE publicacion.usuario IN (SELECT usuario.id FROM usuario INNER JOIN amistad ON amistad.idSeguido = usuario.id WHERE amistad.idSeguidor = ?) AND publicacion.fechacreacion >= (SELECT date_sub(CURDATE(), INTERVAL 1 DAY));");
             $consulta->bindParam(1,$id,PDO::PARAM_INT);
             $consulta->execute();
             $seguidores = $consulta->fetchAll(PDO::FETCH_ASSOC);
@@ -202,7 +201,7 @@ class UsuarioDAO{
             throw new Exception("Ocurrio un error" . $exc->getTraceAsString());
         }
     }
-   
+
     function reacion($idUsuario,$idPublicacion){
         $exito = false;
         try
@@ -218,13 +217,13 @@ class UsuarioDAO{
         }
         return $exito;
     }
-    
+
     function noReacion($idUsuario,$idPublicacion){
         $exito = false;
         try
         {
             $conexion = Conexion::crearConexion();
-            $consulta = $conexion->prepare("DELETE FROM reacion WHERE reacion.idUsuario = ? AND reacion.idPublicacion = (SELECT publicacion.id FROM publicacion WHERE publicacion.foto = ?;");
+            $consulta = $conexion->prepare("DELETE FROM reacion WHERE reacion.idUsuario = ? AND reacion.idPublicacion = (SELECT publicacion.id FROM publicacion WHERE publicacion.foto = ?);");
             $consulta->bindParam(1,$idUsuario,PDO::PARAM_INT);
             $consulta->bindParam(2,$idPublicacion,PDO::PARAM_STR);
             $exito = $consulta->execute();
@@ -234,12 +233,52 @@ class UsuarioDAO{
         }
         return $exito;
     }
-    
+
     function obtenerReacion($id){
         try{
             $conexion = Conexion::crearConexion();
             $consulta = $conexion->prepare("SELECT publicacion.foto FROM publicacion INNER JOIN reacion ON reacion.idPublicacion = publicacion.id WHERE reacion.idUsuario = ?;");
             $consulta->bindParam(1,$id,PDO::PARAM_INT);
+            $consulta->execute();
+            $reaciones = $consulta->fetchAll(PDO::FETCH_ASSOC);
+            echo json_encode($reaciones);
+        }catch(Exception $exc){
+            throw new Exception("Ocurrio un error" . $exc->getTraceAsString());
+        }
+    }
+
+    function buscarReacion($id){
+        try{
+            $conexion = Conexion::crearConexion();
+            $consulta = $conexion->prepare("SELECT * FROM reacion WHERE idUsuario = ?;");
+            $consulta->bindParam(1,$id,PDO::PARAM_INT);
+            $consulta->execute();
+            $reaciones = $consulta->fetchAll(PDO::FETCH_ASSOC);
+            echo $reaciones;
+            echo json_encode($reaciones);
+        }catch(Exception $exc){
+            throw new Exception("Ocurrio un error".$exc->getTraceAsString());
+        }
+    }
+
+    public function cargarNotificaciones($id){
+        try{
+            $conexion = Conexion::crearConexion();
+            $consulta = $conexion->prepare('SELECT usuario.id AS idUsuario,usuario.nombre,usuario.foto AS fotoUsuario,publicacion.foto AS fotoPublicacion FROM usuario INNER JOIN reacion ON usuario.id = reacion.idUsuario INNER JOIN publicacion ON publicacion.id = reacion.idPublicacion WHERE publicacion.usuario = ? ORDER BY publicacion.id DESC;');
+            $consulta->bindParam(1,$id,PDO::PARAM_INT);
+            $consulta->execute();
+            $notificaciones = $consulta->fetchAll(PDO::FETCH_ASSOC);
+            echo json_encode($notificaciones);
+        }catch(Exception $exc){
+            throw new Exception("Ocurrio un error".$exc->getTraceAsString());
+        }
+    }
+
+    function contReaciones($idPublicacion){
+        try{
+            $conexion = Conexion::crearConexion();
+            $consulta = $conexion->prepare("SELECT * FROM reacion WHERE idPublicacion = (SELECT id FROM publicacion WHERE publicacion.foto=?);");
+            $consulta->bindParam(1,$idPublicacion,PDO::PARAM_STR);
             $consulta->execute();
             $reaciones = $consulta->fetchAll(PDO::FETCH_ASSOC);
             echo json_encode($reaciones);

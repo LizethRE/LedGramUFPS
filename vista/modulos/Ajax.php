@@ -24,7 +24,7 @@ class Ajax
             $controlador = $this->obtenerControlador();
             $exito = $controlador->ingresarGoogleControlador($UsuarioDTO);
         }catch(Exception $exc){
-            echo json_encode(array("exito" => false, "error" => $exc->getMessage()));       
+            echo json_encode(array("exito" => false, "error" => $exc->getMessage()));
         }
 
         if ($exito) {
@@ -36,7 +36,7 @@ class Ajax
 
     public function actualizarUsuario($id,$nombre,$usuario,$descripcion){
         $exito = false;
-        try 
+        try
         {
             $controlador = $this->obtenerControlador();
             $UsuarioDTO = new UsuarioDTO($nombre, NULL, NULL, $usuario, $descripcion);
@@ -45,7 +45,7 @@ class Ajax
             echo json_encode(array("exito" => false, "error" => $exc->getMessage()));
         }
 
-        if ($exito) 
+        if ($exito)
         {
             session_start();
             $usuario = unserialize($_SESSION['Usuario']);
@@ -59,7 +59,7 @@ class Ajax
     }
 
     public function mostrarPublicaciones(){
-        try 
+        try
         {
             session_start();
             $controlador = $this->obtenerControlador();
@@ -71,7 +71,7 @@ class Ajax
     }
 
     public function obtenerSeguidos(){
-        try 
+        try
         {
             session_start();
             $controlador = $this->obtenerControlador();
@@ -83,7 +83,7 @@ class Ajax
     }
 
     public function obtenerSeguidosAmistad($id){
-        try 
+        try
         {
             $controlador = $this->obtenerControlador();
             $seguidos = $controlador->obtenerSeguidosAmistadControlador($id);
@@ -94,7 +94,7 @@ class Ajax
     }
 
     public function obtenerSeguidoresAmistad($id){
-        try 
+        try
         {
             $controlador = $this->obtenerControlador();
             $seguidos = $controlador->obtenerSeguidoresAmistadControlador($id);
@@ -105,7 +105,7 @@ class Ajax
     }
 
     public function obtenerSeguidores(){
-        try 
+        try
         {
             session_start();
             $controlador = $this->obtenerControlador();
@@ -117,7 +117,7 @@ class Ajax
     }
 
     public function mostrarPublicacionesAmistad($id){
-        try 
+        try
         {
             session_start();
             $controlador = $this->obtenerControlador();
@@ -129,7 +129,7 @@ class Ajax
     }
 
     public function mostrarPublicacionesInicio(){
-        try 
+        try
         {
             session_start();
             $controlador = $this->obtenerControlador();
@@ -141,7 +141,7 @@ class Ajax
     }
 
     public function mostrarSugerencias(){
-        try 
+        try
         {
             session_start();
             $controlador = $this->obtenerControlador();
@@ -159,7 +159,7 @@ class Ajax
             $controlador = $this->obtenerControlador();
             $exito = $controlador->eliminarPublicacionControlador($id);
         }catch(Exception $exc){
-            echo json_encode(array("exito" => false, "error" => $exc->getMessage()));       
+            echo json_encode(array("exito" => false, "error" => $exc->getMessage()));
         }
 
         if ($exito) {
@@ -177,7 +177,7 @@ class Ajax
             $controlador = $this->obtenerControlador();
             $exito = $controlador->seguirUsuarioControlador($id,$opcion);
         }catch(Exception $exc){
-            echo json_encode(array("exito" => false, "error" => $exc->getMessage()));       
+            echo json_encode(array("exito" => false, "error" => $exc->getMessage()));
         }
 
         if ($exito) {
@@ -196,9 +196,8 @@ class Ajax
         }
         return $busqueda;
     }
-    
+
     public function reacion($idPublicacion,$opcion){
-        
         $exito = false;
         try{
             session_start();
@@ -207,7 +206,7 @@ class Ajax
         }catch(Exception $exc){
             echo json_encode(array("exito" => false, "error" => $exc->getMessage()));
         }
-        
+
         if ($exito) {
             echo json_encode(array("exito" => true));
         } else {
@@ -225,6 +224,39 @@ class Ajax
             echo json_encode(array("exito" => false, "error" => $exc->getMessage()));
         }
         echo $seguidos;
+    }
+
+    public function cargarNotificaciones(){
+        try
+        {
+            session_start();
+            $controlador = $this->obtenerControlador();
+            $notificaciones = $controlador->cargarNotificacionesControlador();
+        } catch (Exception $exc) {
+            echo json_encode(array("exito" => false, "error" => $exc->getMessage()));
+        }
+        echo $notificaciones;
+    }
+
+    public function buscarReacion(){
+        try{
+            $controlador = $this->obtenerControlador();
+            $busqueda = $controlador->buscarReacionControlador();
+        } catch (Exception $exc) {
+            echo json_encode(array("exito" => false, "error" => $exc->getMessage()));
+        }
+        return $busqueda;
+    }
+
+    public function contReaciones($idPublicacion){
+        try
+        {
+            $controlador = $this->obtenerControlador();
+            $contReaciones = $controlador->contReacionesControlador($idPublicacion);
+        } catch (Exception $exc) {
+            echo json_encode(array("exito" => false, "error" => $exc->getMessage()));
+        }
+        echo $contReaciones;
     }
 }
 
@@ -246,6 +278,9 @@ $mostrarPublicacionesInicio = isset($_GET['mostrarPublicacionesInicio']);
 $mostrarSugerencias = isset($_GET['mostrarSugerencias']);
 $reacion = isset($_POST['publicacion'],$_POST['opcionRealizar']);
 $obtenerReacion = isset($_GET['obtenerReacion']);
+$buscarReacion = isset($_GET['buscarReacion']);
+$cargarNotificaciones = isset($_GET['cargarNotificaciones']);
+$contReaciones = isset($_POST['contReaciones']);
 
 if($ingresarGoogle){
     $ajax->ingresarGoogle($_POST['nombreGoogle'],$_POST['correoGoogle'],$_POST['usuarioGoogle'],$_POST['fotoGoogle']);
@@ -279,5 +314,11 @@ if($ingresarGoogle){
     $ajax->reacion($_POST['publicacion'],$_POST['opcionRealizar']);
 }else if($obtenerReacion && $_GET['obtenerReacion']){
     $ajax->obtenerReacion();
+}else if($buscarReacion){
+    $ajax->buscarReacion();
+}else if($cargarNotificaciones && $_GET['cargarNotificaciones']){
+    $ajax->cargarNotificaciones();
+}else if($contReaciones){
+    $ajax->contReaciones($_POST['contReaciones']);
 }
 ?>

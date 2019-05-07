@@ -16,9 +16,14 @@
 				<span style="font-size: 30px; color: gray; margin-right: 15px; align-content: center;">
 					<i class="far fa-bell"></i>
 				</span>
-				<span style="font-size: 30px; color: gray; margin-right: 15px; align-content: center;">
-					<i class="far fa-heart"></i>
+				<span id="btnMostrarNotificaciones" style="font-size: 30px; color: gray; margin-right: 15px; align-content: center;cursor: pointer;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="far fa-heart"></i><span class="badge badge-danger" id="cantidadNotificaciones"></span>
 				</span>
+				<div class="dropdown-menu text-center" style="width: 90%;">
+				<div style="height: 208px;overflow: scroll;overflow-x: hidden;" id="cargarNotificaciones">
+				
+				</div>
+				</div>
 				<span>
 					<a href="perfil" style="font-size: 30px; color: gray; align-content: center;"><i class="far fa-user"></i></a>
 				</span>

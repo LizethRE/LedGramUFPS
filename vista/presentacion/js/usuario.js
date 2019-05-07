@@ -12,6 +12,8 @@ $(document).ready(function () {
     $(usuariosSeguidoresAmistad());
     $(mostrarPublicacionesInicio());
     $(mostrarSugerencias());
+    $("#cargarReacion").hide();
+    $(cargarNotificaciones());
 
     $("#formActualizar").validate({
 
@@ -53,12 +55,6 @@ $(document).ready(function () {
                     } else if (!respuesta["exito"]) {
                         respuestaError("Error!", "Ocurrio un Error");
                     }
-                },
-
-                error: function (jqXHR, estado, error) {
-                    console.log(estado);
-                    console.log(error);
-                    console.log(jqXHR);
                 }
             });
 
@@ -80,8 +76,8 @@ $(document).ready(function () {
             	var cantidad = respuesta.length;
                 var html = '';
                 var html2 = '';
-                if(cantidad<1){	
-                    html2 += html2.concat('<div class="alert alert-primary alert-dismissible fade show" role="alert">', 
+                if(cantidad<1){
+                    html2 += html2.concat('<div class="alert alert-primary alert-dismissible fade show" role="alert">',
                     		'<span class="alert-inner--icon"><i class="fas fa-info-circle"></i></span>',
                     		'<span class="alert-inner--text"><strong>Información!</strong> Ahora puedes empezar a publicar tus fotos para que tus amigos puedan verlas</span>',
                     		'<button type="button" class="close" data-dismiss="alert" aria-label="Close">',
@@ -90,7 +86,6 @@ $(document).ready(function () {
                     		'</div>');
                     $("#alert").html(html2);
                 }else{
-                	//No se que hace?
                 	document.getElementById("publicacion").innerHTML = respuesta.length;
                 	for (var i = 0; i < respuesta.length; i++) {
                         html += '<div class="col-lg-3" id="dana"  data-publicacion="' + respuesta[i].id + '" data-fecha="' + respuesta[i].fecha + '" data-descripcion="' + respuesta[i].descripcion + '" data-id="' + respuesta[i].foto + '" data-toggle="modal" data-target="#modalpublicacion">\n\
@@ -112,6 +107,7 @@ $(document).ready(function () {
         document.getElementById("desc").innerHTML = des;
         $("#fotopublicacion").attr("src", foto);
         $("#texto").val(publicacion);
+        $(contReaciones());
     });
 
     $("#btnEliminarPublicacion").click(function () {
@@ -139,12 +135,6 @@ $(document).ready(function () {
                         success: function (respuesta) {
                             mostrarPublicaciones();
                             $("#modalpublicacion").modal("hide");
-                        },
-
-                        error: function (jqXHR, estado, error) {
-                            console.log(estado);
-                            console.log(error);
-                            console.log(jqXHR);
                         }
                     });
                 }
@@ -173,11 +163,6 @@ $(document).ready(function () {
                     }
                 }
                 $("#cargarBusqueda").html(html);
-            },
-            error: function (jqXHR, estado, error) {
-                console.log(estado);
-                console.log(error);
-                console.log(jqXHR);
             }
         });
     }
@@ -279,12 +264,6 @@ $(document).ready(function () {
                 } else if (!respuesta["exito"]) {
                     respuestaError("Error!", "Ocurrio un Error");
                 }
-            },
-
-            error: function (jqXHR, estado, error) {
-                console.log(estado);
-                console.log(error);
-                console.log(jqXHR);
             }
         });
     });
@@ -305,11 +284,6 @@ $(document).ready(function () {
                         document.getElementById("btnSeguir").innerHTML = "Seguir";
                     };
                 }
-            },
-            error: function (jqXHR, estado, error) {
-                console.log(estado);
-                console.log(error);
-                console.log(jqXHR);
             }
         });
     }
@@ -367,7 +341,38 @@ $(document).ready(function () {
             }
         });
     }
-    
+
+    $("#btnMegustaAmistad").click(function () {
+    	var idPublicacion = document.getElementById("fotopublicacionamistad").getAttribute('src');
+        var opcion = $(this).data("id");
+        var datos = {};
+        if (opcion === "megusta") {
+            datos = {
+                publicacion: idPublicacion,
+                opcionRealizar: "megusta"
+            }
+        }else if (opcion === "nomegusta") {
+            datos = {
+            	publicacion: idPublicacion,
+                opcionRealizar: "nomegusta"
+            }
+        }
+
+        $.ajax({
+            url: 'vista/modulos/Ajax.php',
+            method: 'post',
+            data: datos,
+            dataType: "json",
+            success: function (respuesta) {
+                if (respuesta["exito"]) {
+                    ingresoExitoso("Exito!", "Proceso realizado Correctamente");
+                } else if (!respuesta["exito"]) {
+                    respuestaError("Error!", "Ocurrio un Error");
+                }
+            }
+        });
+    });
+
     function obtenerReacion2() {
     	var idPublicacion = document.getElementById("fotopublicacionamistad").getAttribute('src');
         $.ajax({
@@ -377,28 +382,23 @@ $(document).ready(function () {
                 for (var i = 0; i < respuesta.length; i++) {
                 	var elem = document.getElementById("icoMegusta");
                     if (respuesta[i].foto == idPublicacion) {
-                    	console.log("Entro al IF");
-                        $("#btnMegusta").attr("data-id", "nomegusta");
+                        $("#btnMegustaAmistad").attr("data-id", "nomegusta");
                         elem.classList.remove("far");
-                        elem.classList.remove("fa-kiss-wink-heart");
+                        elem.classList.remove("fa-heart");
                         elem.classList.add("fas");
-                        elem.classList.add("fa-heart-broken"); 
-                        
+                        elem.classList.add("fa-heart");
+                        elem.style.color = '#5e72e4';
+
                         break;
                     } else {
-                    	console.log("Entro al Else");
-                        $("#btnMegusta").attr("data-id", "megusta");
+                        $("#btnMegustaAmistad").attr("data-id", "megusta");
                         elem.classList.remove("fas");
-                        elem.classList.remove("fa-heart-broken");
+                        elem.classList.remove("fa-heart");
                         elem.classList.add("far");
-                        elem.classList.add("fa-kiss-wink-heart");
+                        elem.classList.add("fa-heart");
+                        elem.style.color = null;
                     };
                 }
-            },
-            error: function (jqXHR, estado, error) {
-                console.log(estado);
-                console.log(error);
-                console.log(jqXHR);
             }
         });
     }
@@ -514,7 +514,7 @@ $(document).ready(function () {
                 var html = "";
                 if(cantidad<1){
                     html += html.concat('<br>',
-                    		'<div class="alert alert-primary alert-dismissible fade show" role="alert">', 
+                    		'<div class="alert alert-primary alert-dismissible fade show" role="alert">',
                     		'<span class="alert-inner--icon"><i class="fas fa-info-circle"></i></span>',
                     		'<span class="alert-inner--text"><strong>Información! </strong>Tus amigos no ha realizado publicaciones recientemente o no sigues</span>',
                     		'<span class="alert-inner--text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a nadie.</span>',
@@ -584,47 +584,39 @@ $(document).ready(function () {
             }
         });
     }
-    
-    $("#btnMegusta").click(function () {
+
+    $("#btnMegustaInicio").click(function () {
     	var idPublicacion = document.getElementById("fotopublicacioninicio").getAttribute('src');
         var opcion = $(this).data("id");
         var datos = {};
-        
+
         if (opcion === "megusta") {
             datos = {
                 publicacion: idPublicacion,
                 opcionRealizar: "megusta"
             }
-            console.log(datos);
         }else if (opcion === "nomegusta") {
             datos = {
             	publicacion: idPublicacion,
                 opcionRealizar: "nomegusta"
             }
         }
-        
+
         $.ajax({
             url: 'vista/modulos/Ajax.php',
             method: 'post',
             data: datos,
             dataType: "json",
-
             success: function (respuesta) {
                 if (respuesta["exito"]) {
                     ingresoExitoso("Exito!", "Proceso realizado Correctamente");
                 } else if (!respuesta["exito"]) {
                     respuestaError("Error!", "Ocurrio un Error");
                 }
-            },
-
-            error: function (jqXHR, estado, error) {
-                console.log(estado);
-                console.log(error);
-                console.log(jqXHR);
             }
         });
-    });   
-    
+    });
+
     function obtenerReacion() {
     	var idPublicacion = document.getElementById("fotopublicacioninicio").getAttribute('src');
         $.ajax({
@@ -634,23 +626,32 @@ $(document).ready(function () {
                 for (var i = 0; i < respuesta.length; i++) {
                 	var elem = document.getElementById("icoMegusta");
                     if (respuesta[i].foto == idPublicacion) {
-                    	console.log("Entro al IF");
-                        $("#btnMegusta").attr("data-id", "nomegusta");
+                        $("#btnMegustaInicio").attr("data-id", "nomegusta");
                         elem.classList.remove("far");
-                        elem.classList.remove("fa-kiss-wink-heart");
+                        elem.classList.remove("fa-heart");
                         elem.classList.add("fas");
-                        elem.classList.add("fa-heart-broken"); 
-                        
+                        elem.classList.add("fa-heart");
+                        elem.style.color = '#5e72e4';
+
                         break;
                     } else {
-                    	console.log("Entro al Else");
-                        $("#btnMegusta").attr("data-id", "megusta");
+                        $("#btnMegustaInicio").attr("data-id", "megusta");
                         elem.classList.remove("fas");
-                        elem.classList.remove("fa-heart-broken");
+                        elem.classList.remove("fa-heart");
                         elem.classList.add("far");
-                        elem.classList.add("fa-kiss-wink-heart");
+                        elem.classList.add("fa-heart");
+                        elem.style.color = null;
                     };
                 }
+            }
+        });
+    }
+
+    function cargarReacion() {
+        $.ajax({
+            url: 'vista/modulos/Ajax.php?buscarReacion=true',
+            dataType: 'json',
+            success: function (respuesta) {
             },
             error: function (jqXHR, estado, error) {
                 console.log(estado);
@@ -659,4 +660,71 @@ $(document).ready(function () {
             }
         });
     }
+
+    $("#btnReacion").click(function () {
+    	cargarReacion(busqueda);
+    	$("#cargarReacion").show();
+    });
+
+    function guardarActual(dato){
+            localStorage.setItem('cantidadActual',dato);
+    }
+
+    $("#btnMostrarNotificaciones").click(function(){
+        $(cargarNotificaciones());
+    });
+
+    function cargarNotificaciones(){
+        $.ajax({
+            url: 'vista/modulos/Ajax.php?cargarNotificaciones=true',
+            dataType: 'json',
+            success: function (respuesta) {
+                var cantidad = respuesta.length;
+                var actual = localStorage.getItem('cantidadActual');
+                if(actual!=cantidad || actual === null){
+                    guardarActual(cantidad);
+                    $("#cantidadNotificaciones").show();
+                }else{
+                    $("#cantidadNotificaciones").hide();
+                }
+                var html = "";
+                document.getElementById('cantidadNotificaciones').innerHTML = cantidad;
+                if(cantidad<1){
+                    var nulo = null;
+                    guardarActual(nulo);
+                    $("#cantidadNotificaciones").hide();
+                    html = 'Sin Notificaciones';
+                }else{
+                    for(var i=0;i<cantidad;i++){
+                        html += '<p>\n\
+                    <a href="Usuario='+respuesta[i].idUsuario+'">\n\
+                    <img src="'+respuesta[i].fotoUsuario+'" alt="Error" width="30" height="30" class="rounded-circle mr-2"> <strong>'+respuesta[i].nombre+'</strong>\n\
+                    </a>\n\
+                    le ha gustado su publicación \n\
+                    <img src="'+respuesta[i].fotoPublicacion+'" alt="Error" width="50" height="50" class="rounded-circle mr-2 imagen-gustada"> \n\
+                    </p>\n\
+                    <hr class="m-0 p-0">';
+                    }
+                }
+                $("#cargarNotificaciones").html(html);
+            }
+        });
+    }
+
+	function contReaciones() {
+		var idPublicacion = document.getElementById("fotopublicacion").getAttribute('src');
+		var datos = {
+				contReaciones: idPublicacion
+	    }
+		$.ajax({
+            url: 'vista/modulos/Ajax.php',
+            method: 'post',
+            data: datos,
+            dataType: "json",
+            success: function (respuesta) {
+                var cantidad = respuesta.length;
+                document.getElementById("iconoLikes").innerHTML = cantidad;
+            }
+        });
+	}	
 });

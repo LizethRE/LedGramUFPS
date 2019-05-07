@@ -1,10 +1,10 @@
 <?php
 
 /**
-* 
+*
 */
 class controlador {
-	
+
 	private $negocio;
 
     // Constructor de la clase
@@ -58,9 +58,9 @@ class controlador {
     public function buscarAmistadControlador($palabra,$tipo) {
         echo $this->negocio->buscarAmistadNegocio($palabra,$tipo);
     }
-    
+
     public function seguirUsuarioControlador($id,$opcion){
-     return $this->negocio->seguirUsuarioNegocio($id,$opcion);   
+     return $this->negocio->seguirUsuarioNegocio($id,$opcion);
     }
 
     public function obtenerSeguidosControlador(){
@@ -78,14 +78,26 @@ class controlador {
     public function obtenerSeguidoresControlador(){
         echo $this->negocio->obtenerSeguidoresNegocio();
     }
-    
+
     public function reacionControlador($idPublicacion,$opcion){
         return $this->negocio->reacionNegocio($idPublicacion,$opcion);
     }
-    
+
     public function obtenerReacionControlador(){
         echo $this->negocio->obtenerReacionNegocio();
     }
+
+    public function cargarNotificacionesControlador(){
+        echo $this->negocio->cargarNotificacionesNegocio();
+    }
+
+    public function buscarReacionControlador() {
+        echo $this->negocio->buscarReacionNegocio();
+    }
+
+    public function contReacionesControlador($idPublicacion){
+        echo $this->negocio->contReacionesNegocio($idPublicacion);
+	}
 }
 
 ?>

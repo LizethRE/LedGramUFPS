@@ -66,11 +66,11 @@ $user = unserialize($_SESSION["Usuario"]);
                                 </div>
                                 <div data-toggle="modal" data-target="#modalSeguidos" id="btnSeguidores" style="cursor: pointer;">
                                     <span class="heading" id="seguidores">0</span>
-                                    <span class="description">Seguidores</span>
+                                    <span class="ription">Seguidores</span>
                                 </div>
                                 <div data-toggle="modal" data-target="#modalSeguidos" id="btnSeguidos" style="cursor: pointer;">
                                     <span class="heading" id="seguidos">0</span>
-                                    <span class="description">Seguidos</span>
+                                    <span class="ription">Seguidos</span>
                                 </div>
                             </div>
                         </div>
@@ -232,19 +232,30 @@ $user = unserialize($_SESSION["Usuario"]);
             <div class="col-lg-2 p-0"><img width=40 height=40 class="rounded-circle mr-2" src="' . $user->getFoto() . '" /></div>
             <div class="col-lg-10">
             <div class="row">
-               <div class="col-lg-6"> 
+               <div class="col-lg-6">
             <h6 style="margin:0;padding:0;">@' . $user->getUsuario() . '</h6>
             <p class="text-left m-0 p-0" id="fecha"></p>
                </div>
                <div class="col-lg-6">
                <input type="hidden" id="texto" name="texto">
                 <button class="btn bg-white ml-4" data-id="" id="btnEliminarPublicacion"><i class="fas fa-trash-alt"></i></button>
-               </div> 
+               </div>
             </div>
             </div>
             </section>
             <p class="text-left" id="desc"></p>
-            <hr style="margin:0;padding:0;">';
+            <hr style="margin:0;padding:0;">
+            <div class="row divIconos mt-2 ml-2">
+                <div>
+                  <span class="numLikes" id="iconoLikes">0</span>
+                  <span class="likes"><i class="fas fa-heart" style="color: #5e72e4; font-size: 20px; margin-right: 10px;"></i></span>
+              </div>
+                <div>
+                  <span class="numLikes" id="iconoComment">0</span>
+                  <span class="likes"><i class="far fa-comment" style="font-size: 20px;"></i></span>
+              </div>
+            </div>
+            ';
                             ?>
 
                         </div>

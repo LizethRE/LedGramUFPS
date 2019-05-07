@@ -246,6 +246,11 @@ footer {
   padding-top: 2em;
 }
 
+.imagen-gustada:hover{
+  height: '100px';
+  width: '100px';
+}
+
 @keyframes slide{
     0%{
             background-image: url("../images/ufps.jpg");
